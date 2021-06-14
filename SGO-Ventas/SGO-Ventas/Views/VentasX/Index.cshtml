@@ -1,0 +1,90 @@
+﻿@model SGO_Ventas.Models.ViewModels.IndexVentasX
+
+@{
+    ViewBag.Title = "Ventas";
+}
+
+<div class="jumbotron">
+    <h2 class="text-center">Ventas</h2>
+</div>
+
+@Html.ActionLink("Nueva Venta", "Create")
+
+<table class="table table-striped">
+    <tr>
+        <th scope="col">Cliente</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Total</th>
+        <th scope="col">Forma de Pago</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.VentasX)
+    {
+        <tr>
+            <td>@(((List<SGO_Ventas.Models.Clientes>) ViewBag.Clientes).First(c => c.Id == item.IdCliente).RazonSocial) </td>
+            <td>@item.Fecha</td>
+            <td>@item.Total</td>
+            <td>@(((List<SGO_Ventas.Models.TiposPago>) ViewBag.TiposPago).First(tipoPago => tipoPago.Id == item.IdTipoPago).Descripcion) </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                <button class="btn btn-secondary eliminar" data-id="@item.Id">Eliminar</button> |
+                @Html.ActionLink("Imprimir", "Imprimir", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+
+<!--Paginador-->
+@{Html.RenderPartial("_paginador", Model);}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea eliminar este registro?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.eliminar').click(function () {
+                var idEliminar = $(this).attr("data-id");
+                $("#btnEliminar").attr("data-eliminar", idEliminar);
+                $("#myModal").modal();
+            });
+
+            $("#btnEliminar").click(function () {
+                var idEliminar = $(this).attr("data-eliminar");
+                $.ajax({
+                    url: 'Ventas/Delete',
+                    type: 'post',
+                    data: { id: idEliminar },
+                    success: function (result) {
+                        console.log("Exito");
+                        //$("#" + idEliminar).remove();
+                        $("#myModal").modal('hide');
+                    },
+                    error: function () {
+                        $("#myModal").modal('hide');
+                        console.log("fallo");
+                    }
+                });
+            });
+
+        });
+    </script>
+}

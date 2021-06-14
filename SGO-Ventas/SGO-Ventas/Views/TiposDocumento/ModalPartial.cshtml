@@ -1,0 +1,28 @@
+﻿@model SGO_Ventas.Models.TiposDocumento
+
+<div class="modal fade" id="addTipoDocumento">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addTipoDocumento">Agregar Tipo Documento</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>X</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="Create">
+                    <div class="form-group">
+                        @Html.LabelFor(t => t.Descripcion)
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-save="modal">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div> 

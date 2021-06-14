@@ -1,0 +1,429 @@
+﻿@model SGO_Ventas.Models.Clientes
+@{
+    ViewBag.Title = "Nueva Venta";
+}
+
+<h2>Nueva Venta</h2>
+
+@*Buscar Cliente*@
+@using (Html.BeginForm("BuscarCliente", "VentasX", FormMethod.Get))
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            Cliente
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-12" style="margin-top:2px;">
+                <div class="col-xs-8 col-sm-8 col-md-8">
+                    @Html.DropDownList("RazonSocial", (List<SelectListItem>)ViewBag.RazonSocial, new { @class = "form-control" })
+                    <small id="razonSocialHelp" class="form-text text-muted">Razón Social.</small>
+                </div>
+            </div>
+            <div class="col-lg-12" style="margin-top:2px;">
+                <div class="col-xs-4 col-sm-4 col-md-4 ">
+                    @Html.DropDownList("Tipo Doc", (List<SelectListItem>)ViewBag.TiposDocumento, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8">
+                    <input type="number" name="NroDocumento" id="txtNroDocumento" class="form-control" placeholder="Nº Documento">
+                </div>
+            </div>
+            <div class="col-lg-12" style="margin-top:2px;">
+                <div class="col-xs-8 col-sm-8 col-md-8">
+                    <input type="text" name="Direccion" id="txtDireccion" class="form-control" placeholder="Dirección">
+                </div>
+            </div>
+
+        </div>
+        @*<div class="panel-footer">
+                Bootstrap
+            </div>*@
+    </div>
+}
+
+@*Agregar Productos*@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        Agregar Productos
+    </div>
+    <div class="panel-body">
+        @*Búsqueda de Productos*@
+        <div class="col-lg-12" style="margin-top:2px;">
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <select id="selectLista" class="form-control">
+                    <option value="1">Lista 1</option>
+                    <option value="2">Lista 2</option>
+                    <option value="3">Lista 3</option>
+                </select>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                @Html.DropDownList("TipoPago", (List<SelectListItem>)ViewBag.TiposPago, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-top:10px;">
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                @Html.DropDownList("Producto", (List<SelectListItem>)ViewBag.Productos, new { @class = "form-control" })
+                <small id="productoHelp" class="form-text text-muted">Seleccionar producto.</small>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <input value="0.00" readonly="readonly" type="number" name="Precio" id="txtPrecio" class="form-control" placeholder="Precio">
+                <small id="precioHelp" class="form-text text-muted">Precio de venta.</small>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <input value="0.00" type="number" name="Cantidad" id="txtCantidad" class="form-control" placeholder="Cantidad">
+                <small id="cantidadHelp" class="form-text text-muted">Seleccionar cantidad.</small>
+            </div>
+        </div>
+        <hr />
+        <div class="col-lg-12" style="margin-top:10px;">
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <input value="0.00" type="number" name="Descuento" id="txtDescuento" class="form-control" placeholder="Descuento">
+                <small id="descuentoHelp" class="form-text text-muted">Descuento.</small>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <input value="0.00" readonly="readonly" type="number" name="Importe" id="txtImporte" class="form-control" placeholder="Importe">
+                <small id="importeHelp" class="form-text text-muted">Importe.</small>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <input type="button" style="float: left" value="Agregar" name="Agregar" id="btnAgregar" class="btn btn-success" />
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
+
+@*Detalle de Venta*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Detalle de Venta
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped" style="width: 100%" id="tblProductos">
+            <tr>
+                <th hidden> Producto Id</th>
+                <th scope="col">Producto</th>
+                <th scope="col" class="text-right">Precio</th>
+                <th scope="col" class="text-right">Cantidad</th>
+                <th scope="col" class="text-right">Descuento</th>
+                <th scope="col" class="text-right">Importe</th>
+                <th scope="col" class="text-right">Acción</th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-8">
+                <label for="Total" style="margin-top: 5px; float: right" id="lblTotal">Total</label>
+            </div>
+            <div class="col-md-2">
+                <input readonly="readonly" type="text" style="text-align:right; float: right" name="Total" id="txtTotal" class="form-control" placeholder="Total">
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div style="margin-top: 0px">
+    <input data-backdrop="static" data-keydrop="false" data-toggle="modal" data-target="#divPago" style="float: right" type="button" value="Cobrar" name="checkout" id="btnCobrar" class="btn btn-primary" />
+</div>
+
+@*Modal confirmacion de Venta*@
+<div id="divPago" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmación de Venta</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        Total
+                        <input style="text-align: right" type="text" id="txtPagoTotal" readonly="readonly" value="0.00" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        Abona
+                        <input style="text-align: right" type="text" id="txtAbona" value="0.00" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        Vuelto
+                        <input style="text-align: right" type="text" id="txtVuelto" value="0.00" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        Balance
+                        <input style="text-align: right" type="text" readonly="readonly" id="txtBalance" value="0.00" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button disabled class="btn btn-success" id="btnPagar" value="Pagar">Pagar</button>
+                <button class="btn btn-danger" id="btnClose" data-dismiss="modal" value="close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ResetInicial();
+            
+            $('.buscar').click(function () {
+                var nroDocumentoIngresado = $(this).attr("data-id");
+                $.ajax({
+                    url: '/VentasX/BuscarCliente',
+                    type: 'get',
+                    data: { nroDocumento: nroDocumentoIngresado },
+                    success: function (result) {
+                        console.log("Exito");
+                    },
+                    error: function () {
+                        console.log("fallo");
+                    }
+                });
+            });
+
+            $("#btnAgregar").click(function () {
+                AgregarItemEnLista();
+            });
+
+            $("#Producto").val(0);
+            $("#Producto").change(function () {
+                var productoId = $("#Producto").val();
+                var lista = $("#selectLista").val();
+                GetPrecio(productoId, lista);
+            })
+
+            $('#txtCantidad').on('input', function (e) {
+                CalcularSubTotal();
+            });
+
+            $('#txtDescuento').on('input', function (e) {
+                CalcularSubTotal();
+            });
+
+            $("#RazonSocial").change(function () {
+                var ClienteId = $("#RazonSocial").val();
+                GetCliente(ClienteId);
+            });
+
+            $("#btnPagar").click(function () {
+                Cobrar();
+                ResetInicial();
+            });
+
+            $("input[type=text]").keyup(function () {
+                CalcularBalance();
+            });
+        });
+
+        function CalcularBalance() {
+            var Total = $("#txtPagoTotal").val();
+            var Abona = $("#txtAbona").val();
+            var Vuelto = $("#txtVuelto").val();
+            var Balance = parseFloat(Total) - parseFloat(Abona) + parseFloat(Vuelto);
+            $("#txtBalance").val(parseFloat(Balance).toFixed(2));
+            if (parseFloat(Balance) == 0) {
+                $("#btnPagar").removeAttr("disabled");
+                console.log('habilitar');
+            } else {
+                $("#btnPagar").attr("disabled", "disabled");
+                console.log('deshabilitar');
+            }
+        }
+
+        function Cobrar() {
+            ResetCobrar();
+            var ventaViewModel = {};
+            var ListaDeVentaDetalleViewModel = new Array();
+            ventaViewModel.TipoPagoId = $("#TipoPago").val();
+            ventaViewModel.ClienteId = $("#RazonSocial").val();
+            ventaViewModel.Total = $("#txtTotal").val();
+
+            $("#tblProductos").find('tr:gt(0)').each(function () {
+                var ventaDetalleViewModel = {};
+                ventaDetalleViewModel.ProductoId = parseFloat($(this).find('td').eq(0).text());
+                ventaDetalleViewModel.Precio = parseFloat($(this).find('td').eq(2).text());
+                ventaDetalleViewModel.Cantidad = parseFloat($(this).find('td').eq(3).text());
+                ventaDetalleViewModel.Descuento = parseFloat($(this).find('td').eq(4).text());
+                ventaDetalleViewModel.Importe = parseFloat($(this).find('td').eq(5).text());
+                ListaDeVentaDetalleViewModel.push(ventaDetalleViewModel);
+            });
+            ventaViewModel.ListaDeVentaDetalleViewModel = ListaDeVentaDetalleViewModel;
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(ventaViewModel),
+                url: '/VentasX/Create',
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert('Error al registrar la venta');
+                },
+            });
+        }
+
+        function AgregarItemEnLista() {
+            var tblProductos = $("#tblProductos");
+            var Precio = $("#txtPrecio").val();
+            var Cantidad = $("#txtCantidad").val();
+            var Descuento = $("#txtDescuento").val();
+            var ProductoId = $("#Producto").val();
+            var Producto = $("#Producto option:selected").text();
+            var Total = (Cantidad * Precio) - Descuento;
+
+            var ListaProductos =
+                "<tr>" +
+                "<td hidden> " + ProductoId + "</td > " +
+                "<td>" + Producto + "</td>" +
+                "<td class='text-right'>" + parseFloat(Precio).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + parseFloat(Cantidad).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + parseFloat(Descuento).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + parseFloat(Total).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + "<input type='button' value='Quitar' name='remove' class='btn btn-danger' onclick='QuitarProducto(this)' /> </td >" +
+                "</tr > ";
+
+            tblProductos.append(ListaProductos);
+            FinalItemTotal();
+            ResetItem();
+        }
+
+        function QuitarProducto(ProductoId) {
+            $(ProductoId).closest('tr').remove();
+        }
+
+        function CalcularSubTotal() {
+            var Precio = $("#txtPrecio").val();
+            var Cantidad = $("#txtCantidad").val();
+            var Descuento = $("#txtDescuento").val();
+
+            var Importe = (Cantidad * Precio) - Descuento;
+            $("#txtImporte").val(parseFloat(Importe).toFixed(2));
+
+        }
+
+        function FinalItemTotal() {
+            $("#txtTotal").val('0.00');
+            var FinalTotal = 0.00;
+            $("#tblProductos").find('tr:gt(0)').each(function () {
+                var Total = parseFloat($(this).find('td').eq(5).text());
+                console.log('Total ' + Total);
+                FinalTotal += Total;
+            });
+            $("#txtTotal").val(parseFloat(FinalTotal).toFixed(2));
+            $("#txtPagoTotal").val(parseFloat(FinalTotal).toFixed(2));
+            $("#txtBalance").val(parseFloat(FinalTotal).toFixed(2));
+        }
+
+        function ResetCobrar() {
+            $("#txtPagoTotal").val('0.00');
+            $("#txtVuelto").val('0.00');
+            $("#txtAbona").val('0.00');
+            $("#txtBalance").val('0.00');
+        }
+
+        function ResetInicial() {
+            $("#txtDireccion").val('');
+            $("#txtNroDocumento").val('');
+            $("#txtTotal").val('0.00');
+            $("#btnPagar").attr("disabled", "disabled");
+            ResetCobrar();
+        }
+
+        function ResetItem() {
+            $("#txtPrecio").val('0.00');
+            $("#txtCantidad").val('0.00');
+            $("#txtDescuento").val('0.00');
+            $("#txtImporte").val('0.00');
+            $("#Producto").val(0);
+            $("#selectLista").val(1);
+        }
+
+        function GetPrecio(productoId, lista) {
+            $.ajax({
+                async: true,
+                type: 'GET',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                url: '/VentasX/getPrecioProducto',
+                data: { id: productoId, lista: lista },
+                success: function (data) {
+                    $("#txtPrecio").val(parseFloat(data).toFixed(2));
+                },
+                error: function () {
+                    alert('Error en la búsqueda de precio unitario')
+                },
+            });
+
+        }
+
+        function GetCliente(id) {
+            $.ajax({
+                async: true,
+                type: 'GET',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                url: '/VentasX/getCliente',
+                data: { id: id },
+                success: function (data) {
+                    $("#txtDireccion").val(data);
+                    //$("#txtNroDocumento").val(data[0].NroDocumento);
+                },
+                error: function () {
+                    alert('Error al buscar datos de cliente')
+                },
+            });
+        }
+
+        function matchStart(params, data) {
+            // If there are no search terms, return all of the data
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+
+            // Skip if there is no 'children' property
+            if (typeof data.children === 'undefined') {
+                return null;
+            }
+
+            // `data.children` contains the actual options that we are matching against
+            var filteredChildren = [];
+            $.each(data.children, function (idx, child) {
+                if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+                    filteredChildren.push(child);
+                }
+            });
+
+            // If we matched any of the timezone group's children, then set the matched children on the group
+            // and return the group object
+            if (filteredChildren.length) {
+                var modifiedData = $.extend({}, data, true);
+                modifiedData.children = filteredChildren;
+
+                // You can return modified objects from here
+                // This includes matching the `children` how you want in nested data sets
+                return modifiedData;
+            }
+
+            // Return `null` if the term should not be displayed
+            return null;
+        }
+
+        $("#Producto").select2({
+            matcher: matchStart
+        });
+    </script>
+}

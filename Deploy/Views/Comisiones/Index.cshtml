@@ -1,0 +1,112 @@
+﻿@model SGO_Ventas.Models.ViewModels.IndexComisiones
+
+@{
+    ViewBag.Title = "Comisiones";
+}
+
+<div class="jumbotron">
+    <h2 class="text-center">Comisiones</h2>
+</div>
+
+
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.ActionLink("Nueva Comisión", "Create")
+    </div>
+    <div class="form-group col-md-6">
+        @using (Html.BeginForm("Index", "Comisiones", FormMethod.Get))
+        {
+            <div class="form-group col-md-8">
+                <input class="form-control mr-sm-2" type="search" name="comision" placeholder="Buscar Comisión" aria-label="Search">
+            </div>
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        }
+    </div>
+
+</div>
+
+<table class="table  table-striped">
+    <tr>
+        <th scope="col">RazonSocial</th>
+        <th scope="col">Tipo de Documento</th>
+        <th scope="col">Nº Documento</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">E-Mail</th>
+        <th scope="col">Observaciones</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Comisiones)
+    {
+        <tr>
+            <td>@item.RazonSocial</td>
+            <td align="center">@(((List<SGO_Ventas.Models.TiposDocumento>) ViewBag.TiposDocumento).First(d => d.Id == item.IdTipoDocumento).Descripcion )</td>
+            <td>@item.NroDocumento</td>
+            <td>@item.Direccion</td>
+            <td>@item.Telefono</td>
+            <td>@item.EMail</td>
+            <td>@item.Observaciones</td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+<!--Paginador-->
+@{Html.RenderPartial("_paginador", Model);}
+
+
+<!-- Modal -->
+@*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que quiere eliminar este registro?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@*@section Scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.eliminar').click(function () {
+                    var idEliminar = $(this).attr("data-id");
+                    $("#btnEliminar").attr("data-eliminar", idEliminar);
+                    $("#myModal").modal();
+                });
+
+                $("#btnEliminar").click(function () {
+                    var idEliminar = $(this).attr("data-eliminar");
+                    $.ajax({
+                        url: '/Comisiones/Delete',
+                        type: 'post',
+                        data: { id: idEliminar },
+                        success: function (result) {
+                            console.log("Exito");
+                            //$("#" + idEliminar).remove();
+                            $("#myModal").modal('hide');
+                        },
+                        error: function () {
+                            $("#myModal").modal('hide');
+                            console.log("fallo");
+                        }
+                    });
+                });
+
+            });
+        </script>
+    }*@
+

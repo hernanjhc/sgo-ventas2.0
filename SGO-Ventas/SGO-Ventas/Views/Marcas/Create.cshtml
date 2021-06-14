@@ -1,0 +1,19 @@
+﻿@model SGO_Ventas.Models.Marcas
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Marcas", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descripcion, "Descripción")
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <td colspan="2"><button type="submit" class="btn btn-primary">Guardar</button></td>
+    </div>
+}
+
+@Html.ActionLink("Volver al Listado", "Index")

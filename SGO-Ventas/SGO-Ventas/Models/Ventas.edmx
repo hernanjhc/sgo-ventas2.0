@@ -1,0 +1,1256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Ventas.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NroDocumento" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+          <Property Name="Telefono" Type="varchar" MaxLength="255" />
+          <Property Name="EMail" Type="varchar" MaxLength="255" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="255" />
+          <Property Name="IdComision" Type="int" />
+        </EntityType>
+        <EntityType Name="Comisiones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NroDocumento" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+          <Property Name="EMail" Type="varchar" MaxLength="50" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Compras">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdTipoPago" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComprasDetalle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdCompra" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Descuento" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Importe" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="50" />
+          <Property Name="Documento" Type="varchar" MaxLength="50" />
+          <Property Name="Domicilio" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movimientos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="IdVenta" Type="int" />
+          <Property Name="IdCliente" Type="int" />
+          <Property Name="IdCompra" Type="int" />
+          <Property Name="IdProveedor" Type="int" />
+          <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentaStock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovimientosCaja">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="IdVenta" Type="int" />
+          <Property Name="IdCliente" Type="int" />
+          <Property Name="IdCompra" Type="int" />
+          <Property Name="idProveedor" Type="int" />
+          <Property Name="Ingreso" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Egreso" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Contrasiento" Type="int" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CodBarra" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdMarca" Type="int" />
+          <Property Name="IdRubro" Type="int" />
+          <Property Name="IdProveedor" Type="int" />
+          <Property Name="IdUnidad" Type="int" />
+          <Property Name="Costo" Type="numeric" Precision="17" Scale="2" />
+          <Property Name="PrecioL1" Type="numeric" Precision="17" Scale="2" />
+          <Property Name="PrecioL2" Type="numeric" Precision="17" Scale="2" />
+          <Property Name="PrecioL3" Type="numeric" Precision="17" Scale="2" />
+          <Property Name="Stock" Type="numeric" Precision="17" Scale="2" />
+          <Property Name="StockMinimo" Type="numeric" Precision="17" Scale="2" Nullable="false" />
+          <Property Name="IVAVenta" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NroDocumento" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+          <Property Name="Telefono" Type="varchar" MaxLength="255" />
+          <Property Name="EMail" Type="varchar" MaxLength="255" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Rubros">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiposDocumento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiposPago">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EMail" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="tinyint" Nullable="false" />
+          <Property Name="FechaBaja" Type="datetime" />
+          <Property Name="NombreCompleto" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VentasX">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" />
+          <Property Name="IdTipoPago" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Total" Type="numeric" Precision="17" Scale="2" />
+          <Property Name="IdUsuario" Type="int" />
+        </EntityType>
+        <EntityType Name="VentasXDetalles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdVenta" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Descuento" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Importe" Type="numeric" Precision="17" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Clientes_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Clientes1" Type="Self.Clientes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_Comisiones">
+          <End Role="Comisiones" Type="Self.Comisiones" Multiplicity="0..1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comisiones">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IdComision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_TiposDocumento">
+          <End Role="TiposDocumento" Type="Self.TiposDocumento" Multiplicity="1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comisiones_TiposDocumento">
+          <End Role="TiposDocumento" Type="Self.TiposDocumento" Multiplicity="1" />
+          <End Role="Comisiones" Type="Self.Comisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comisiones">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_Proveedores">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_TiposPago">
+          <End Role="TiposPago" Type="Self.TiposPago" Multiplicity="1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposPago">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdTipoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Marcas">
+          <End Role="Marcas" Type="Self.Marcas" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marcas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Proveedores">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Rubros">
+          <End Role="Rubros" Type="Self.Rubros" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Unidades">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proveedores_TiposDocumento">
+          <End Role="TiposDocumento" Type="Self.TiposDocumento" Multiplicity="1" />
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proveedores">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasX_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="VentasX" Type="Self.VentasX" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasX">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasX_TiposPago">
+          <End Role="TiposPago" Type="Self.TiposPago" Multiplicity="0..1" />
+          <End Role="VentasX" Type="Self.VentasX" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposPago">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasX">
+              <PropertyRef Name="IdTipoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasX_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="VentasX" Type="Self.VentasX" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasX">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasXDetalles_Productos">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="VentasXDetalles" Type="Self.VentasXDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasXDetalles">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasXDetalles_VentasX">
+          <End Role="VentasX" Type="Self.VentasX" Multiplicity="1" />
+          <End Role="VentasXDetalles" Type="Self.VentasXDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VentasX">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasXDetalles">
+              <PropertyRef Name="IdVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VentasStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comisiones" EntityType="Self.Comisiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComprasDetalle" EntityType="Self.ComprasDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movimientos" EntityType="Self.Movimientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MovimientosCaja" EntityType="Self.MovimientosCaja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rubros" EntityType="Self.Rubros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiposDocumento" EntityType="Self.TiposDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiposPago" EntityType="Self.TiposPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidades" EntityType="Self.Unidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VentasX" EntityType="Self.VentasX" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VentasXDetalles" EntityType="Self.VentasXDetalles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Clientes_Clientes" Association="Self.FK_Clientes_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Clientes1" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_Comisiones" Association="Self.FK_Clientes_Comisiones">
+            <End Role="Comisiones" EntitySet="Comisiones" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_TiposDocumento" Association="Self.FK_Clientes_TiposDocumento">
+            <End Role="TiposDocumento" EntitySet="TiposDocumento" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comisiones_TiposDocumento" Association="Self.FK_Comisiones_TiposDocumento">
+            <End Role="TiposDocumento" EntitySet="TiposDocumento" />
+            <End Role="Comisiones" EntitySet="Comisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_Proveedores" Association="Self.FK_Compras_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_TiposPago" Association="Self.FK_Compras_TiposPago">
+            <End Role="TiposPago" EntitySet="TiposPago" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_Usuarios" Association="Self.FK_Compras_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Marcas" Association="Self.FK_Productos_Marcas">
+            <End Role="Marcas" EntitySet="Marcas" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Proveedores" Association="Self.FK_Productos_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Rubros" Association="Self.FK_Productos_Rubros">
+            <End Role="Rubros" EntitySet="Rubros" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Unidades" Association="Self.FK_Productos_Unidades">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proveedores_TiposDocumento" Association="Self.FK_Proveedores_TiposDocumento">
+            <End Role="TiposDocumento" EntitySet="TiposDocumento" />
+            <End Role="Proveedores" EntitySet="Proveedores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasX_Clientes" Association="Self.FK_VentasX_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="VentasX" EntitySet="VentasX" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasX_TiposPago" Association="Self.FK_VentasX_TiposPago">
+            <End Role="TiposPago" EntitySet="TiposPago" />
+            <End Role="VentasX" EntitySet="VentasX" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasX_Usuarios" Association="Self.FK_VentasX_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="VentasX" EntitySet="VentasX" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasXDetalles_Productos" Association="Self.FK_VentasXDetalles_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="VentasXDetalles" EntitySet="VentasXDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasXDetalles_VentasX" Association="Self.FK_VentasXDetalles_VentasX">
+            <End Role="VentasX" EntitySet="VentasX" />
+            <End Role="VentasXDetalles" EntitySet="VentasXDetalles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Ventas" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_Marcas" FromRole="Marcas" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CodBarra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMarca" Type="Int32" />
+          <Property Name="IdRubro" Type="Int32" />
+          <Property Name="IdProveedor" Type="Int32" />
+          <Property Name="IdUnidad" Type="Int32" />
+          <Property Name="Costo" Type="Decimal" Precision="17" Scale="2" />
+          <Property Name="PrecioL1" Type="Decimal" Precision="17" Scale="2" />
+          <Property Name="PrecioL2" Type="Decimal" Precision="17" Scale="2" />
+          <Property Name="PrecioL3" Type="Decimal" Precision="17" Scale="2" />
+          <Property Name="Stock" Type="Decimal" Precision="17" Scale="2" />
+          <Property Name="StockMinimo" Type="Decimal" Precision="17" Scale="2" Nullable="false" />
+          <Property Name="IVAVenta" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Observaciones" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Marcas" Relationship="Self.FK_Productos_Marcas" FromRole="Productos" ToRole="Marcas" />
+          <NavigationProperty Name="Rubros" Relationship="Self.FK_Productos_Rubros" FromRole="Productos" ToRole="Rubros" />
+          <NavigationProperty Name="Unidades" Relationship="Self.FK_Productos_Unidades" FromRole="Productos" ToRole="Unidades" />
+          <NavigationProperty Name="Proveedores" Relationship="Ventas.FK_Productos_Proveedores" FromRole="Productos" ToRole="Proveedores" />
+          <NavigationProperty Name="VentasXDetalles" Relationship="Ventas.FK_VentasXDetalles_Productos" FromRole="Productos" ToRole="VentasXDetalles" />
+        </EntityType>
+        <EntityType Name="Rubros">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_Rubros" FromRole="Rubros" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="TiposDocumento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Proveedores" Relationship="Ventas.FK_Proveedores_TiposDocumento" FromRole="TiposDocumento" ToRole="Proveedores" />
+          <NavigationProperty Name="Clientes" Relationship="Ventas.FK_Clientes_TiposDocumento" FromRole="TiposDocumento" ToRole="Clientes" />
+          <NavigationProperty Name="Comisiones" Relationship="Ventas.FK_Comisiones_TiposDocumento" FromRole="TiposDocumento" ToRole="Comisiones" />
+        </EntityType>
+        <EntityType Name="Unidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_Unidades" FromRole="Unidades" ToRole="Productos" />
+        </EntityType>
+        <Association Name="FK_Productos_Marcas">
+          <End Role="Marcas" Type="Self.Marcas" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marcas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Rubros">
+          <End Role="Rubros" Type="Self.Rubros" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Unidades">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VentasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Marcas" EntityType="Self.Marcas" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <EntitySet Name="Rubros" EntityType="Self.Rubros" />
+          <EntitySet Name="TiposDocumento" EntityType="Self.TiposDocumento" />
+          <EntitySet Name="Unidades" EntityType="Self.Unidades" />
+          <AssociationSet Name="FK_Productos_Marcas" Association="Self.FK_Productos_Marcas">
+            <End Role="Marcas" EntitySet="Marcas" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Rubros" Association="Self.FK_Productos_Rubros">
+            <End Role="Rubros" EntitySet="Rubros" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Unidades" Association="Self.FK_Productos_Unidades">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <EntitySet Name="Proveedores" EntityType="Ventas.Proveedores" />
+          <AssociationSet Name="FK_Productos_Proveedores" Association="Ventas.FK_Productos_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proveedores_TiposDocumento" Association="Ventas.FK_Proveedores_TiposDocumento">
+            <End Role="TiposDocumento" EntitySet="TiposDocumento" />
+            <End Role="Proveedores" EntitySet="Proveedores" />
+          </AssociationSet>
+          <EntitySet Name="TiposPago" EntityType="Ventas.TiposPago" />
+          <EntitySet Name="VentasX" EntityType="Ventas.VentasX" />
+          <EntitySet Name="VentasXDetalles" EntityType="Ventas.VentasXDetalles" />
+          <AssociationSet Name="FK_VentasXDetalles_Productos" Association="Ventas.FK_VentasXDetalles_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="VentasXDetalles" EntitySet="VentasXDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasX_TiposPago" Association="Ventas.FK_VentasX_TiposPago">
+            <End Role="TiposPago" EntitySet="TiposPago" />
+            <End Role="VentasX" EntitySet="VentasX" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasXDetalles_VentasX" Association="Ventas.FK_VentasXDetalles_VentasX">
+            <End Role="VentasX" EntitySet="VentasX" />
+            <End Role="VentasXDetalles" EntitySet="VentasXDetalles" />
+          </AssociationSet>
+          <EntitySet Name="MovimientosCaja" EntityType="Ventas.MovimientosCaja" />
+          <EntitySet Name="Compras" EntityType="Ventas.Compras" />
+          <AssociationSet Name="FK_Compras_Proveedores" Association="Ventas.FK_Compras_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras_TiposPago" Association="Ventas.FK_Compras_TiposPago">
+            <End Role="TiposPago" EntitySet="TiposPago" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <EntitySet Name="ComprasDetalle" EntityType="Ventas.ComprasDetalle" />
+          <EntitySet Name="Movimientos" EntityType="Ventas.Movimientos" />
+          <EntitySet Name="Empresa" EntityType="Ventas.Empresa" />
+          <EntitySet Name="Usuarios" EntityType="Ventas.Usuarios" />
+          <AssociationSet Name="FK_Compras_Usuarios" Association="Ventas.FK_Compras_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasX_Usuarios" Association="Ventas.FK_VentasX_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="VentasX" EntitySet="VentasX" />
+          </AssociationSet>
+          <EntitySet Name="Clientes" EntityType="Ventas.Clientes" />
+          <AssociationSet Name="FK_Clientes_Clientes" Association="Ventas.FK_Clientes_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Clientes1" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clientes_TiposDocumento" Association="Ventas.FK_Clientes_TiposDocumento">
+            <End Role="TiposDocumento" EntitySet="TiposDocumento" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentasX_Clientes" Association="Ventas.FK_VentasX_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="VentasX" EntitySet="VentasX" />
+          </AssociationSet>
+          <EntitySet Name="Comisiones" EntityType="Ventas.Comisiones" />
+          <AssociationSet Name="FK_Clientes_Comisiones" Association="Ventas.FK_Clientes_Comisiones">
+            <End Role="Comisiones" EntitySet="Comisiones" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comisiones_TiposDocumento" Association="Ventas.FK_Comisiones_TiposDocumento">
+            <End Role="TiposDocumento" EntitySet="TiposDocumento" />
+            <End Role="Comisiones" EntitySet="Comisiones" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NroDocumento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EMail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Productos" Relationship="Ventas.FK_Productos_Proveedores" FromRole="Proveedores" ToRole="Productos" />
+          <NavigationProperty Name="TiposDocumento" Relationship="Ventas.FK_Proveedores_TiposDocumento" FromRole="Proveedores" ToRole="TiposDocumento" />
+          <NavigationProperty Name="Compras" Relationship="Ventas.FK_Compras_Proveedores" FromRole="Proveedores" ToRole="Compras" />
+        </EntityType>
+        <Association Name="FK_Productos_Proveedores">
+          <End Type="Ventas.Proveedores" Role="Proveedores" Multiplicity="0..1" />
+          <End Type="Ventas.Productos" Role="Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proveedores_TiposDocumento">
+          <End Type="Ventas.TiposDocumento" Role="TiposDocumento" Multiplicity="1" />
+          <End Type="Ventas.Proveedores" Role="Proveedores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proveedores">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TiposPago">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VentasX" Relationship="Ventas.FK_VentasX_TiposPago" FromRole="TiposPago" ToRole="VentasX" />
+          <NavigationProperty Name="Compras" Relationship="Ventas.FK_Compras_TiposPago" FromRole="TiposPago" ToRole="Compras" />
+        </EntityType>
+        <EntityType Name="VentasX">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" />
+          <Property Name="IdTipoPago" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="17" Scale="2" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <NavigationProperty Name="TiposPago" Relationship="Ventas.FK_VentasX_TiposPago" FromRole="VentasX" ToRole="TiposPago" />
+          <NavigationProperty Name="VentasXDetalles" Relationship="Ventas.FK_VentasXDetalles_VentasX" FromRole="VentasX" ToRole="VentasXDetalles" />
+          <NavigationProperty Name="Usuarios" Relationship="Ventas.FK_VentasX_Usuarios" FromRole="VentasX" ToRole="Usuarios" />
+          <NavigationProperty Name="Clientes" Relationship="Ventas.FK_VentasX_Clientes" FromRole="VentasX" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="VentasXDetalles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdVenta" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Importe" Type="Decimal" Nullable="false" Precision="17" Scale="2" />
+          <NavigationProperty Name="Productos" Relationship="Ventas.FK_VentasXDetalles_Productos" FromRole="VentasXDetalles" ToRole="Productos" />
+          <NavigationProperty Name="VentasX" Relationship="Ventas.FK_VentasXDetalles_VentasX" FromRole="VentasXDetalles" ToRole="VentasX" />
+        </EntityType>
+        <Association Name="FK_VentasXDetalles_Productos">
+          <End Type="Ventas.Productos" Role="Productos" Multiplicity="1" />
+          <End Type="Ventas.VentasXDetalles" Role="VentasXDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasXDetalles">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasX_TiposPago">
+          <End Type="Ventas.TiposPago" Role="TiposPago" Multiplicity="0..1" />
+          <End Type="Ventas.VentasX" Role="VentasX" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposPago">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasX">
+              <PropertyRef Name="IdTipoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasXDetalles_VentasX">
+          <End Type="Ventas.VentasX" Role="VentasX" Multiplicity="1" />
+          <End Type="Ventas.VentasXDetalles" Role="VentasXDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VentasX">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasXDetalles">
+              <PropertyRef Name="IdVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MovimientosCaja">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdVenta" Type="Int32" />
+          <Property Name="IdCliente" Type="Int32" />
+          <Property Name="IdCompra" Type="Int32" />
+          <Property Name="idProveedor" Type="Int32" />
+          <Property Name="Ingreso" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Egreso" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasiento" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Compras">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoPago" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Proveedores" Relationship="Ventas.FK_Compras_Proveedores" FromRole="Compras" ToRole="Proveedores" />
+          <NavigationProperty Name="TiposPago" Relationship="Ventas.FK_Compras_TiposPago" FromRole="Compras" ToRole="TiposPago" />
+          <NavigationProperty Name="Usuarios" Relationship="Ventas.FK_Compras_Usuarios" FromRole="Compras" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK_Compras_Proveedores">
+          <End Type="Ventas.Proveedores" Role="Proveedores" Multiplicity="1" />
+          <End Type="Ventas.Compras" Role="Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras_TiposPago">
+          <End Type="Ventas.TiposPago" Role="TiposPago" Multiplicity="1" />
+          <End Type="Ventas.Compras" Role="Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposPago">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdTipoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ComprasDetalle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdCompra" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Importe" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Movimientos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="IdVenta" Type="Int32" />
+          <Property Name="IdCliente" Type="Int32" />
+          <Property Name="IdCompra" Type="Int32" />
+          <Property Name="IdProveedor" Type="Int32" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentaStock" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Byte" Nullable="false" />
+          <Property Name="FechaBaja" Type="DateTime" Precision="3" />
+          <Property Name="NombreCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Compras" Relationship="Ventas.FK_Compras_Usuarios" FromRole="Usuarios" ToRole="Compras" />
+          <NavigationProperty Name="VentasX" Relationship="Ventas.FK_VentasX_Usuarios" FromRole="Usuarios" ToRole="VentasX" />
+        </EntityType>
+        <Association Name="FK_Compras_Usuarios">
+          <End Type="Ventas.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="Ventas.Compras" Role="Compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Compras">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasX_Usuarios">
+          <End Type="Ventas.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="Ventas.VentasX" Role="VentasX" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasX">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NroDocumento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EMail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IdComision" Type="Int32" />
+          <NavigationProperty Name="Clientes1" Relationship="Ventas.FK_Clientes_Clientes" FromRole="Clientes" ToRole="Clientes1" />
+          <NavigationProperty Name="Clientes2" Relationship="Ventas.FK_Clientes_Clientes" FromRole="Clientes1" ToRole="Clientes" />
+          <NavigationProperty Name="TiposDocumento" Relationship="Ventas.FK_Clientes_TiposDocumento" FromRole="Clientes" ToRole="TiposDocumento" />
+          <NavigationProperty Name="VentasX" Relationship="Ventas.FK_VentasX_Clientes" FromRole="Clientes" ToRole="VentasX" />
+          <NavigationProperty Name="Comisiones" Relationship="Ventas.FK_Clientes_Comisiones" FromRole="Clientes" ToRole="Comisiones" />
+        </EntityType>
+        <Association Name="FK_Clientes_Clientes">
+          <End Type="Ventas.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="Ventas.Clientes" Role="Clientes1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clientes_TiposDocumento">
+          <End Type="Ventas.TiposDocumento" Role="TiposDocumento" Multiplicity="1" />
+          <End Type="Ventas.Clientes" Role="Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentasX_Clientes">
+          <End Type="Ventas.Clientes" Role="Clientes" Multiplicity="0..1" />
+          <End Type="Ventas.VentasX" Role="VentasX" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentasX">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Comisiones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NroDocumento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="Ventas.FK_Clientes_Comisiones" FromRole="Comisiones" ToRole="Clientes" />
+          <NavigationProperty Name="TiposDocumento" Relationship="Ventas.FK_Comisiones_TiposDocumento" FromRole="Comisiones" ToRole="TiposDocumento" />
+        </EntityType>
+        <Association Name="FK_Clientes_Comisiones">
+          <End Type="Ventas.Comisiones" Role="Comisiones" Multiplicity="0..1" />
+          <End Type="Ventas.Clientes" Role="Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comisiones">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="IdComision" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comisiones_TiposDocumento">
+          <End Type="Ventas.TiposDocumento" Role="TiposDocumento" Multiplicity="1" />
+          <End Type="Ventas.Comisiones" Role="Comisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comisiones">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VentasStoreContainer" CdmEntityContainer="VentasEntities">
+          <EntitySetMapping Name="Marcas">
+            <EntityTypeMapping TypeName="Ventas.Marcas">
+              <MappingFragment StoreEntitySet="Marcas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="Ventas.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CodBarra" ColumnName="CodBarra" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdUnidad" ColumnName="IdUnidad" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="PrecioL1" ColumnName="PrecioL1" />
+                <ScalarProperty Name="PrecioL2" ColumnName="PrecioL2" />
+                <ScalarProperty Name="PrecioL3" ColumnName="PrecioL3" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="StockMinimo" ColumnName="StockMinimo" />
+                <ScalarProperty Name="IVAVenta" ColumnName="IVAVenta" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rubros">
+            <EntityTypeMapping TypeName="Ventas.Rubros">
+              <MappingFragment StoreEntitySet="Rubros">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposDocumento">
+            <EntityTypeMapping TypeName="Ventas.TiposDocumento">
+              <MappingFragment StoreEntitySet="TiposDocumento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unidades">
+            <EntityTypeMapping TypeName="Ventas.Unidades">
+              <MappingFragment StoreEntitySet="Unidades">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedores">
+            <EntityTypeMapping TypeName="Ventas.Proveedores">
+              <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposPago">
+            <EntityTypeMapping TypeName="Ventas.TiposPago">
+              <MappingFragment StoreEntitySet="TiposPago">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VentasX">
+            <EntityTypeMapping TypeName="Ventas.VentasX">
+              <MappingFragment StoreEntitySet="VentasX">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdTipoPago" ColumnName="IdTipoPago" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VentasXDetalles">
+            <EntityTypeMapping TypeName="Ventas.VentasXDetalles">
+              <MappingFragment StoreEntitySet="VentasXDetalles">
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovimientosCaja">
+            <EntityTypeMapping TypeName="Ventas.MovimientosCaja">
+              <MappingFragment StoreEntitySet="MovimientosCaja">
+                <ScalarProperty Name="Contrasiento" ColumnName="Contrasiento" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Egreso" ColumnName="Egreso" />
+                <ScalarProperty Name="Ingreso" ColumnName="Ingreso" />
+                <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compras">
+            <EntityTypeMapping TypeName="Ventas.Compras">
+              <MappingFragment StoreEntitySet="Compras">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdTipoPago" ColumnName="IdTipoPago" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComprasDetalle">
+            <EntityTypeMapping TypeName="Ventas.ComprasDetalle">
+              <MappingFragment StoreEntitySet="ComprasDetalle">
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movimientos">
+            <EntityTypeMapping TypeName="Ventas.Movimientos">
+              <MappingFragment StoreEntitySet="Movimientos">
+                <ScalarProperty Name="DescuentaStock" ColumnName="DescuentaStock" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="Ventas.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Ventas.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="Ventas.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="IdComision" ColumnName="IdComision" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comisiones">
+            <EntityTypeMapping TypeName="Ventas.Comisiones">
+              <MappingFragment StoreEntitySet="Comisiones">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

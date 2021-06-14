@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Importar";
+}
+
+<h2>Importar</h2>
+
+@*<a class="btn btn-success btn-sm" href="@Url.Action("Importar")">Leer excel</a>*@
+
+<div class="row">
+    <div class="col-lg-12">
+        <form class="form" method="POST" action="/Productos/Importar">
+            <div class="form-group">
+                <label>Archivo: C:\Temp\Produc.xls</label>
+                <br />
+                <label>Seleccione la Hoja:</label>
+                <br>
+                <input type="radio" name="worksheet"
+                       value="Hoja1" checked />Hoja1<br>
+            </div>
+            <div class="form-group">
+                <label>Acciones:</label>
+                <br>
+                <input type="radio" name="method"
+                       value="0" checked /> Sólo Lectura<br>
+                <input type="radio" name="method"
+                       value="1" /> Importar
+            </div>
+            <div class="form-group">
+                <input type="submit"
+                       class="form-control btn btn-default" value="Leer archivo" />
+            </div>
+        </form>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-12">
+        <label>Archivo a importar:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <table class="table">
+            @if (@Model != null)
+            {
+                @Html.Raw("<thead>" +
+                                "<th>Cod Barra</th>" +
+                                "<th>Descripcion</th>" +
+                                "<th>Marca</th>" +
+                                "<th>Rubro</th>" +
+                                "<th>Proveedor</th>" +
+                                "<th>Unidad</th>" +
+                                "<th>Costo</th>" +
+                                "<th>PrecioL1</th>" +
+                                "<th>PrecioL2</th>" +
+                                "<th>PrecioL3</th>" +
+                                "<th>Stock</th>" +
+                                "<th>StockMinimo</th>" +
+                                "<th>IvaVentas</th>" +
+                                "<th>Observaciones</th>" +
+                            "</thead>" +
+                            "<tbody>");
+                foreach (var elem in @Model as IEnumerable
+                <SGO_Ventas.Models.ViewModels.ImportarProductoViewModel>
+                    )
+                {
+                    @Html.Raw("<tr>" +
+                                    "<td>" + @elem.CodBarra + "</td>" +
+                                    "<td>" + @elem.Descripcion + "</td>" +
+                                    "<td>" + @elem.Marca + "</td>" +
+                                    "<td>" + @elem.Rubro + "</td>" +
+                                    "<td>" + @elem.Proveedor + "</td>" +
+                                    "<td>" + @elem.Unidad + "</td>" +
+                                    "<td>" + @elem.Costo + "</td>" +
+                                    "<td>" + @elem.PrecioL1 + "</td>" +
+                                    "<td>" + @elem.PrecioL2 + "</td>" +
+                                    "<td>" + @elem.PrecioL3 + "</td>" +
+                                    "<td>" + @elem.Stock + "</td>" +
+                                    "<td>" + @elem.StockMinimo + "</td>" +
+                                    "<td>" + @elem.IvaVentas + "</td>" +
+                                    "<td>" + @elem.Observaciones + "</td>" +
+                                "</tr>");
+                }
+                @Html.Raw("</tbody>");
+            }
+        </table>
+    </div>
+    <div class="col-sm-8"></div>
+</div>

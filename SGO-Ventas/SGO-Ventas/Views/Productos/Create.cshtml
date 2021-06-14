@@ -1,0 +1,75 @@
+﻿@model SGO_Ventas.Models.Productos
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Productos", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.CodBarra, "Código")
+        @Html.TextBoxFor(p => p.CodBarra, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Descripcion, "Descripción")
+        @Html.TextBoxFor(p => p.Descripcion, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.IdMarca, "Marca")
+        @Html.DropDownList("IdMarca", (List<SelectListItem>)ViewBag.Marcas, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.IdRubro, "Rubro")
+        @Html.DropDownList("IdRubro", (List<SelectListItem>)ViewBag.Rubros, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.IdProveedor, "Proveedor")
+        @Html.DropDownList("IdProveedor", (List<SelectListItem>)ViewBag.Proveedores, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.IdUnidad, "Unidad")
+        @Html.DropDownList("IdUnidad", (List<SelectListItem>)ViewBag.Unidades, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Costo, "Costo")
+        @Html.TextBoxFor(p => p.Costo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.PrecioL1, "Lista 1")
+        @Html.TextBoxFor(p => p.PrecioL1, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.PrecioL2, "Lista 2")
+        @Html.TextBoxFor(p => p.PrecioL2, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.PrecioL3, "Lista 3")
+        @Html.TextBoxFor(p => p.PrecioL3, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Stock, "Stock")
+        @Html.TextBoxFor(p => p.Stock, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.StockMinimo, "Stock Mínimo")
+        @Html.TextBoxFor(p => p.StockMinimo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.IVAVenta, "IVA")
+        @Html.TextBoxFor(p => p.IVAVenta, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Observaciones, "Observaciones")
+        @Html.TextBoxFor(p => p.Observaciones, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <td colspan="2">
+            <button type="submit" class="btn btn-primary">Cargar</button>
+        </td>
+    </div>
+}
+
+@Html.ActionLink("Volver al Listado","Index")
+

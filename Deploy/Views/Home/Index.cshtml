@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Sistema de Ventas</h1>
+    <p class="lead">Una herramienta para gestionar las transacciones del negocio...</p>
+    @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Productos</h2>
+        <p>
+            Cargar los productos, para iniciar el sistema. </br>
+            Registrar Ventas y Compras para mantener actualizado el Stock.
+        </p>
+        <a class="btn btn-secondary" href="@Url.Action("Index","Productos")">ir a Productos</a>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Clientes</h2>
+        <p>
+            Registre clientes, y las ventas que les realiza a ellos . </br>
+            Actualice los datos periodicamente, el contacto constante con ellos
+            es importante para el negocio.
+        </p>
+        <a class="btn btn-secondary" href="@Url.Action("Index","Clientes")">ir a Clientes</a>
+    </div>
+    <div class="col-md-4">
+        <h2>Ventas</h2>
+        <p>
+            Iniciemos... </br>
+            El sistema está listo para operar.
+            Sólo nos falta animarnos...
+        </p>
+        <a class="btn btn-secondary" href="@Url.Action("Index","VentasX")">ir a Ventas</a>
+    </div>
+</div>
+

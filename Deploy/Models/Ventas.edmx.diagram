@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1c77a0ece15a4f8a99483d9dd94da322" Name="Diagram1">
+        <EntityTypeShape EntityType="Ventas.Marcas" Width="1.5" PointX="8.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ventas.Productos" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ventas.Rubros" Width="1.5" PointX="8.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ventas.TiposDocumento" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ventas.Unidades" Width="1.5" PointX="8.5" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="Ventas.FK_Productos_Marcas" ManuallyRouted="false" />
+        <AssociationConnector Association="Ventas.FK_Productos_Rubros" ManuallyRouted="false" />
+        <AssociationConnector Association="Ventas.FK_Productos_Unidades" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Ventas.Proveedores" Width="1.5" PointX="3" PointY="2" />
+        <AssociationConnector Association="Ventas.FK_Productos_Proveedores" />
+        <AssociationConnector Association="Ventas.FK_Proveedores_TiposDocumento" />
+        <EntityTypeShape EntityType="Ventas.TiposPago" Width="1.5" PointX="3" PointY="9.5" />
+        <EntityTypeShape EntityType="Ventas.VentasX" Width="1.5" PointX="5.25" PointY="9.125" />
+        <EntityTypeShape EntityType="Ventas.VentasXDetalles" Width="1.5" PointX="11.5" PointY="2" />
+        <AssociationConnector Association="Ventas.FK_VentasXDetalles_Productos" />
+        <AssociationConnector Association="Ventas.FK_VentasX_TiposPago" />
+        <AssociationConnector Association="Ventas.FK_VentasXDetalles_VentasX" />
+        <EntityTypeShape EntityType="Ventas.MovimientosCaja" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Ventas.Compras" Width="1.5" PointX="8.25" PointY="11" />
+        <AssociationConnector Association="Ventas.FK_Compras_Proveedores" />
+        <AssociationConnector Association="Ventas.FK_Compras_TiposPago" />
+        <EntityTypeShape EntityType="Ventas.ComprasDetalle" Width="1.5" PointX="10.375" PointY="10.75" />
+        <EntityTypeShape EntityType="Ventas.Movimientos" Width="1.5" PointX="11.375" PointY="5.75" />
+        <EntityTypeShape EntityType="Ventas.Empresa" Width="1.5" PointX="12.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Ventas.Usuarios" Width="1.5" PointX="0.75" PointY="13" />
+        <AssociationConnector Association="Ventas.FK_Compras_Usuarios" />
+        <AssociationConnector Association="Ventas.FK_VentasX_Usuarios" />
+        <EntityTypeShape EntityType="Ventas.Clientes" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="Ventas.FK_Clientes_Clientes" />
+        <AssociationConnector Association="Ventas.FK_Clientes_TiposDocumento" />
+        <AssociationConnector Association="Ventas.FK_VentasX_Clientes" />
+        <EntityTypeShape EntityType="Ventas.Comisiones" Width="1.5" PointX="3" PointY="12.125" />
+        <AssociationConnector Association="Ventas.FK_Clientes_Comisiones" />
+        <AssociationConnector Association="Ventas.FK_Comisiones_TiposDocumento" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

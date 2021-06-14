@@ -1,0 +1,164 @@
+﻿@model SGO_Ventas.Models.ViewModels.IndexProductos
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="jumbotron">
+    <h2 class="text-center">Productos</h2>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.ActionLink("Nuevo Producto", "Create")
+    </div>
+    <div class="form-group col-md-6">
+        <button type="button" id="btnExportar" class="btn btn-secondary">Exportar Productos</button>
+        <button type="button" id="btnImportar" class="btn btn-secondary">Importar Productos</button>
+    </div>
+    <div class="form-group col-md-6">
+        @using (Html.BeginForm("Index", "Productos", FormMethod.Get))
+        {
+            <div class="form-group col-md-8">
+                <input class="form-control mr-sm-2" type="search" name="producto" placeholder="Buscar Producto" aria-label="Search">
+            </div>
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        }
+    </div>
+
+</div>
+
+<br />
+<table class="table table-striped">
+    <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Rubro</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Unidad</th>
+        <th scope="col">Costo</th>
+        <th scope="col">Lista 1</th>
+        <th scope="col">Lista 2</th>
+        <th scope="col">Lista 3</th>
+        <th scope="col">Stock</th>
+    </tr>
+
+    @foreach (var item in Model.Productos)
+    {
+        <tr>
+            <td>@item.CodBarra</td>
+            <td>@item.Descripcion</td>
+            <td>@(((List<SGO_Ventas.Models.Marcas>) ViewBag.Marcas).First(m => m.Id == item.IdMarca).Descripcion)</td>
+            <td>@(((List<SGO_Ventas.Models.Rubros>) ViewBag.Rubros).First(r => r.Id == item.IdRubro).Descripcion)</td>
+            <td>@(((List<SGO_Ventas.Models.Proveedores>) ViewBag.Proveedores).First(p => p.Id == item.IdProveedor).RazonSocial)</td>
+            <td>@(((List<SGO_Ventas.Models.Unidades>) ViewBag.Unidades).First(u => u.Id == item.IdUnidad).Descripcion)</td>
+            <td>@item.Costo</td>
+            <td>@item.PrecioL1</td>
+            <td>@item.PrecioL2</td>
+            <td>@item.PrecioL3</td>
+            <td>@item.Stock</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+
+    }
+</table>
+<!--Paginador-->
+@{Html.RenderPartial("_paginador", Model);}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que queire eliminar este registro?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnEliminar" data-eliminar="">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.eliminar').click(function () {
+                var idEliminar = $(this).attr("data-id");
+                $("#btnEliminar").attr("data-eliminar", idEliminar);
+                $("#myModal").modal();
+            });
+
+            $("#btnEliminar").click(function () {
+                var idEliminar = $(this).attr("data-eliminar");
+                $.ajax({
+                    url: '/Productos/Delete',
+                    type: 'post',
+                    data: { id: idEliminar },
+                    success: function (result) {
+                        console.log("Exito");
+                        //$("#" + idEliminar).remove();
+                        $("#myModal").modal('hide');
+                    },
+                    error: function () {
+                        $("#myModal").modal('hide');
+                        console.log("fallo");
+                    }
+                });
+            });
+
+            $("#btnExportar").click(function () {
+                ExportarProductos();
+            });
+
+            function ExportarProductos() {
+                $.ajax({
+                    url: '/Productos/ExportarTxt',
+                    //async: true,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: null,                    
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function () {
+                        alert('Error al exportar productos en C:/Temp');
+                    },
+                });
+            }
+
+            $("#btnImportar").click(function () {
+                ImportarProductos();
+            });
+
+            function ImportarProductos() {
+                $.ajax({
+                    url: '/Productos/ImportarTxt',
+                    //async: true,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: null,
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function () {
+                        alert('Error al importar productos en C:/Temp');
+                    },
+                });
+            }
+        });
+    </script>
+}

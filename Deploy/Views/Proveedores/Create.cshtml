@@ -1,0 +1,46 @@
+﻿@model SGO_Ventas.Models.Proveedores
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Proveedores", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.RazonSocial, "Razón Social")
+        @Html.TextBoxFor(p => p.RazonSocial, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.IdTipoDocumento, "Tipo de Documento")
+        @Html.DropDownList("IdTipoDocumento", (List<SelectListItem>)ViewBag.TiposDocumento, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.NroDocumento, "Nº Documento")
+        @Html.TextBoxFor(p => p.NroDocumento, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Direccion, "Dirección")
+        @Html.TextBoxFor(p => p.Direccion, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Telefono, "Teléfono")
+        @Html.TextBoxFor(p => p.Telefono, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.EMail, "E-Mail")
+        @Html.TextBoxFor(p => p.EMail, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Observaciones)
+        @Html.TextBoxFor(p => p.Observaciones, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <td colspan="2">
+            <button type="submit" class="btn btn-primary">Cargar</button>
+        </td>
+    </div>
+}
+
+@Html.ActionLink("Volver al Listado", "Index")

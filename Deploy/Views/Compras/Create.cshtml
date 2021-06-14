@@ -1,0 +1,391 @@
+﻿@model SGO_Ventas.Models.Proveedores
+@{
+    ViewBag.Title = "Nueva Compra";
+}
+
+<h2>Nueva Compra</h2>
+
+@*Buscar Proveedor*@
+@using (Html.BeginForm("BuscarProveedor", "Compras", FormMethod.Get))
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            Proveedor
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-12" style="margin-top:2px;">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="col-xs-3 col-sm-3 col-md-3 ">
+                        <label for="RazonSocial">Razón Social:</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 ">
+                        @Html.DropDownList("RazonSocial", (List<SelectListItem>)ViewBag.RazonSocial, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="col-xs-5 col-sm-5 col-md-5 ">
+                        <label for="NroDocumento">Nro Documento:</label>
+                    </div>
+                    <div class="col-xs-7 col-sm-7 col-md-7">
+                        <input type="number" name="NroDocumento" id="txtNroDocumento" class="form-control" placeholder="Nº Documento">
+                    </div>
+                </div>
+
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="col-xs-3 col-sm-3 col-md-3 ">
+                        <label for="Direccion">Dirección:</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 ">
+                        <input type="text" name="Direccion" id="txtDireccion" class="form-control" placeholder="Dirección">
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="panel-footer">
+                Bootstrap
+            </div>*@
+    </div>
+}
+
+@*Agregar Productos*@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        Agregar Productos
+    </div>
+    <div class="panel-body">
+        @*Búsqueda de Productos*@
+        <div class="col-lg-12" style="margin-top:2px;">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="col-xs-3 col-sm-3 col-md-3 ">
+                    <label for="TipoPago">Tipo de Pago</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 ">
+                    @Html.DropDownList("TipoPago", (List<SelectListItem>)ViewBag.TiposPago, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-top:10px;">
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <div class="col-xs-4 col-sm-4 col-md-4 ">
+                    <label for="Producto">Producto</label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8">
+                    @Html.DropDownList("Producto", (List<SelectListItem>)ViewBag.Productos, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <div class="col-xs-3 col-sm-3 col-md-3 ">
+                    <label for="Precio">Precio</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 ">
+                    <input value="0.00" type="number" name="Precio" id="txtPrecio" class="form-control" placeholder="Precio">
+                </div>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <div class="col-xs-4 col-sm-4 col-md-4 ">
+                    <label for="Cantidad">Cantidad</label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 ">
+                    <input value="0.00" type="number" name="Cantidad" id="txtCantidad" class="form-control" placeholder="Cantidad">
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="col-lg-12" style="margin-top:10px;">
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <div class="col-xs-4 col-sm-4 col-md-4 ">
+                    <label for="Descuento">Descuento</label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 ">
+                    <input value="0.00" type="number" name="Descuento" id="txtDescuento" class="form-control" placeholder="Descuento">
+                </div>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <div class="col-xs-3 col-sm-3 col-md-3 ">
+                    <label for="Importe">Importe</label>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 ">
+                    <input value="0.00" readonly="readonly" type="number" name="Importe" id="txtImporte" class="form-control" placeholder="Importe">
+                </div>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <input type="button" style="float: right" value="Agregar" name="Agregar" id="btnAgregar" class="btn btn-success" />
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
+
+@*Detalle de Compra*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Detalle de Compra
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped" style="width: 100%" id="tblProductos">
+            <tr>
+                <th hidden> Producto Id</th>
+                <th scope="col">Producto</th>
+                <th scope="col" class="text-right">Precio</th>
+                <th scope="col" class="text-right">Cantidad</th>
+                <th scope="col" class="text-right">Descuento</th>
+                <th scope="col" class="text-right">Importe</th>
+                <th scope="col" class="text-right">Acción</th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-8">
+                <label for="Total" style="margin-top: 5px; float: right" id="lblTotal">Total</label>
+            </div>
+            <div class="col-md-2">
+                <input readonly="readonly" type="text" style="text-align:right; float: right" name="Total" id="txtTotal" class="form-control" placeholder="Total">
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div style="margin-top: 0px">
+    <input data-backdrop="static" data-keydrop="false" data-toggle="modal" data-target="#divPago" style="float: right" type="button" value="Cobrar" name="checkout" id="btnCobrar" class="btn btn-primary" />
+</div>
+
+@*Modal confirmacion de Compra*@
+<div id="divPago" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmación de Compra</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        Total
+                        <input style="text-align: right" type="text" id="txtPagoTotal" readonly="readonly" value="0.00" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        Abona
+                        <input style="text-align: right" type="text" id="txtAbona" value="0.00" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        Vuelto
+                        <input style="text-align: right" type="text" id="txtVuelto" value="0.00" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        Balance
+                        <input style="text-align: right" type="text" readonly="readonly" id="txtBalance" value="0.00" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button disabled class="btn btn-success" id="btnPagar" value="Pagar">Pagar</button>
+                <button class="btn btn-danger" id="btnClose" data-dismiss="modal" value="close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ResetInicial();
+
+            $('.buscar').click(function () {
+                var nroDocumentoIngresado = $(this).attr("data-id");
+                $.ajax({
+                    url: '/VentasX/BuscarCliente',
+                    type: 'get',
+                    data: { nroDocumento: nroDocumentoIngresado },
+                    success: function (result) {
+                        console.log("Exito");
+                    },
+                    error: function () {
+                        console.log("fallo");
+                    }
+                });
+            });
+
+            $("#btnAgregar").click(function () {
+                AgregarItemEnLista();
+            });
+
+            $('#txtCantidad').on('input', function (e) {
+                CalcularSubTotal();
+            });
+
+            $('#txtDescuento').on('input', function (e) {
+                CalcularSubTotal();
+            });
+
+            $("#RazonSocial").change(function () {
+                var ProveedorId = $("#RazonSocial").val();
+                getProveedor(ProveedorId);
+            });
+
+            $("#btnPagar").click(function () {
+                Cobrar();
+                ResetInicial();
+            });
+
+            $("input[type=text]").keyup(function () {
+                CalcularBalance();
+            });
+        });
+
+        function CalcularBalance() {
+            var Total = $("#txtPagoTotal").val();
+            var Abona = $("#txtAbona").val();
+            var Vuelto = $("#txtVuelto").val();
+            var Balance = parseFloat(Total) - parseFloat(Abona) + parseFloat(Vuelto);
+            $("#txtBalance").val(parseFloat(Balance).toFixed(2));
+            if (parseFloat(Balance) == 0) {
+                $("#btnPagar").removeAttr("disabled");
+                console.log('habilitar');
+            } else {
+                $("#btnPagar").attr("disabled", "disabled");
+                console.log('deshabilitar');
+            }
+        }
+
+        function Cobrar() {
+            ResetCobrar();
+            var compraViewModel = {};
+            var ListaDeCompraDetalleViewModel = new Array();
+            compraViewModel.TipoPagoId = $("#TipoPago").val();
+            compraViewModel.ProveedorId = $("#RazonSocial").val();
+            compraViewModel.Total = $("#txtTotal").val();
+
+            $("#tblProductos").find('tr:gt(0)').each(function () {
+                var compraDetalleViewModel = {};
+                compraDetalleViewModel.ProductoId = parseFloat($(this).find('td').eq(0).text());
+                compraDetalleViewModel.Precio = parseFloat($(this).find('td').eq(2).text());
+                compraDetalleViewModel.Cantidad = parseFloat($(this).find('td').eq(3).text());
+                compraDetalleViewModel.Descuento = parseFloat($(this).find('td').eq(4).text());
+                compraDetalleViewModel.Importe = parseFloat($(this).find('td').eq(5).text());
+                ListaDeCompraDetalleViewModel.push(compraDetalleViewModel);
+            });
+            compraViewModel.ListaDeCompraDetalleViewModel = ListaDeCompraDetalleViewModel;
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(compraViewModel),
+                url: '/Compras/Create',
+                success: function (data) {
+                    alert(data);
+                },
+                error: function () {
+                    alert('Error al registrar la compra');
+                },
+            });
+        }
+
+        function AgregarItemEnLista() {
+            var tblProductos = $("#tblProductos");
+            var Precio = $("#txtPrecio").val();
+            var Cantidad = $("#txtCantidad").val();
+            var Descuento = $("#txtDescuento").val();
+            var ProductoId = $("#Producto").val();
+            var Producto = $("#Producto option:selected").text();
+            var Total = (Cantidad * Precio) - Descuento;
+
+            var ListaProductos =
+                "<tr>" +
+                "<td hidden> " + ProductoId + "</td > " +
+                "<td>" + Producto + "</td>" +
+                "<td class='text-right'>" + parseFloat(Precio).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + parseFloat(Cantidad).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + parseFloat(Descuento).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + parseFloat(Total).toFixed(2) + "</td>" +
+                "<td class='text-right'>" + "<input type='button' value='Quitar' name='remove' class='btn btn-danger' onclick='QuitarProducto(this)' /> </td >" +
+                "</tr > ";
+
+            tblProductos.append(ListaProductos);
+            FinalItemTotal();
+            ResetItem();
+        }
+
+        function QuitarProducto(ProductoId) {
+            $(ProductoId).closest('tr').remove();
+        }
+
+        function CalcularSubTotal() {
+            var Precio = $("#txtPrecio").val();
+            var Cantidad = $("#txtCantidad").val();
+            var Descuento = $("#txtDescuento").val();
+
+            var Importe = (Cantidad * Precio) - Descuento;
+            $("#txtImporte").val(parseFloat(Importe).toFixed(2));
+
+        }
+
+        function FinalItemTotal() {
+            $("#txtTotal").val('0.00');
+            var FinalTotal = 0.00;
+            $("#tblProductos").find('tr:gt(0)').each(function () {
+                var Total = parseFloat($(this).find('td').eq(5).text());
+                console.log('Total ' + Total);
+                FinalTotal += Total;
+            });
+            $("#txtTotal").val(parseFloat(FinalTotal).toFixed(2));
+            $("#txtPagoTotal").val(parseFloat(FinalTotal).toFixed(2));
+            $("#txtBalance").val(parseFloat(FinalTotal).toFixed(2));
+        }
+
+        function ResetCobrar() {
+            $("#txtPagoTotal").val('0.00');
+            $("#txtVuelto").val('0.00');
+            $("#txtAbona").val('0.00');
+            $("#txtBalance").val('0.00');
+        }
+
+        function ResetInicial() {
+            $("#txtDireccion").val('');
+            $("#txtNroDocumento").val('');
+            $("#txtTotal").val('0.00');
+            $("#btnPagar").attr("disabled", "disabled");
+            ResetCobrar();
+        }
+
+        function ResetItem() {
+            $("#txtPrecio").val('0.00');
+            $("#txtCantidad").val('0.00');
+            $("#txtDescuento").val('0.00');
+            $("#txtImporte").val('0.00');
+            $("#Producto").val(0);
+            $("#selectLista").val(1);
+        }
+
+        function getProveedor(id) {
+            $.ajax({
+                async: true,
+                type: 'GET',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                url: '/Compras/getProveedor',
+                data: { id: id },
+                success: function (data) {
+                    $("#txtDireccion").val(data);
+                    //$("#txtNroDocumento").val(data[0].NroDocumento);
+                },
+                error: function () {
+                    alert('Error al buscar datos del proveedor')
+                },
+            });
+        }
+    </script>
+}
