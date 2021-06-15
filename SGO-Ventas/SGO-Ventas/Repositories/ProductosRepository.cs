@@ -155,8 +155,7 @@ namespace SGO_Ventas.Repositories
         internal static bool GuardarProductoLeidoPorTxt(ProductosImport item)
         {
             bool proceso = true;
-            if (item.Id != 0) proceso = false;
-
+            
             Productos producto = new Productos();
             if (!item.CodBarra.Any()) proceso = false;
             producto.CodBarra = item.CodBarra.Any() ? item.CodBarra : "";
@@ -184,12 +183,32 @@ namespace SGO_Ventas.Repositories
             producto.StockMinimo = item.StockMinimo >= 0 ? item.StockMinimo : 0;
             producto.IVAVenta = item.IvaVentas >= 0 ? item.IvaVentas : 0;
             producto.Observaciones = item.Observaciones.Any() ? item.Observaciones : "";
-            if (proceso)
+            if (!proceso) return proceso;
+            if (item.Id == 0)
             {
                 GuardarProducto(producto);
             }
+            if (ExisteIdProducto(item.Id))
+            {
+                producto.Id = item.Id;
+                EditarProducto(producto);
+            }
+            else
+            {
+                proceso = false;
+            }
             return proceso;
         }
+
+        private static bool ExisteIdProducto(int id)
+        {
+            using (var db = new VentasEntities())
+            {
+                var producto = db.Productos.Where(p => p.Id == id) ;
+                return producto.Any();
+            }
+        }
+
         public static Productos ObtenerProducto(int id)
         {
             using (var db = new VentasEntities())
