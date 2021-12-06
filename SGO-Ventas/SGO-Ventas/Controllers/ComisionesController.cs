@@ -1,4 +1,5 @@
-﻿using SGO_Ventas.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using SGO_Ventas.Models;
 using SGO_Ventas.Repositories;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -7,7 +8,7 @@ namespace SGO_Ventas.Controllers
 {
     public class ComisionesController : Controller
     {
-        public ActionResult Index(int pagina = 1, string comision="")
+        public System.Web.Mvc.ActionResult Index(int pagina = 1, string comision="")
         {
             int registrosPorPágina = Lib.Configuration.RegistroPorPagina();
             List<Comisiones> c = new List<Comisiones>();
