@@ -20,18 +20,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @*<ul class="navbar-nav flex-grow-1">*@
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>*@
                         <!-- Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                               aria-haspopup="true" aria-expanded="false">Archivo</a>
                             <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" asp-controller="Marcas" asp-action="Index">Marca</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
@@ -64,10 +61,11 @@
             &copy; 2021 - Ventas - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/DataTables/DataTables-1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/DataTables/DataTables-1.11.3/js/jquery.dataTables.min.js?v="332"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

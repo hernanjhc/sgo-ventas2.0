@@ -19,32 +19,39 @@
     <br />
     <div class="p-3">
         <table id="tblMarcas" class="table table-striped table-bordered" style="width:100%">
-            <tr>
-                <th>Id</th>
-                <th>IdEmpresa</th>
-                <th>Marca</th>
-                <th>Observaciones</th>
-                <th>Acciones</th>
-            </tr>
-            @foreach (var item in Model)
-            {
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdEmpresa)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Marca)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Observaciones)</td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
-                    </td>
+                    <th>Id</th>
+                    <th>IdEmpresa</th>
+                    <th>Marca</th>
+                    <th>Observaciones</th>
+                    <th>Acciones</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdEmpresa)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Marca)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Observaciones)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $('#tblMarcas').DataTable();
-    });
-</script>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tblMarcas').DataTable();
+        });
+    </script>
+}
+    
