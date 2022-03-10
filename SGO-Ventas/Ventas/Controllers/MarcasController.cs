@@ -14,5 +14,18 @@ namespace Ventas.Controllers
             var marcas = MarcasRepository.GetEmarcas();
             return View(marcas);
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                if (MarcasRepository.EliminarMarca(id))
+                {
+                    return Json(new { success = true, mesagge = "Borrado Correctamente" });
+                }
+            }
+            return Json(new { success = false, mesagge = "No se pudo borrar" });
+        }
     }
 }

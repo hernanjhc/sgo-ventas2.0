@@ -19,6 +19,25 @@ namespace Ventas.Repositories
             return marcas;
         }
 
+        internal static bool EliminarMarca(int id)
+        {
+            try
+            {
+                using (var db = new VentasContext())
+                {
+                    var marca = db.Emarcas.Find(id);
+                    db.Emarcas.Remove(marca);
+                    db.SaveChanges();
+            }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         //public static List<MarcasViewModels> GetMarcasViewModels()
         //{
         //    List<MarcasViewModels> marcas = new List<MarcasViewModels>();
