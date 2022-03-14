@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
+using API_Ventas.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,14 @@ namespace API_Ventas.Controllers
         {
             string t="";
 
-            if (login.user == "a" && login.key == "a" )
+            if (LoginRepositories.ControlLogin(login))
             {
                 t = TokenManagement.BuildToken();
-            }
-            
             return Ok(t);
+            }
+
+            return BadRequest();
+
         }
     }
 }
