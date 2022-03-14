@@ -13,7 +13,6 @@ namespace API_Ventas.Controllers
     public class LoginController : Controller
     {
 
-
         [HttpPost]
         public IActionResult Login(Login login)
         {
